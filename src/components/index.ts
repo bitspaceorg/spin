@@ -1,0 +1,6 @@
+export { default as Chat } from './chat'
+export { default as Login } from './login'
+export { default as Sidebar } from './sidebar'
+export { default as Dashboard } from './dashboard'
+export { default as Upload } from './upload'
+export { default as Upper } from './upper'

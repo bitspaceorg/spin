@@ -1,6 +1,7 @@
 'use client'
 import Image from "next/image";
 import { useState } from 'react';
+import axios from 'axios';
 
 const Messages = ({ messages }: { messages: { sender: string, text: string }[] }) => {
     return <div className="max-h-[88vh] overflow-y-auto py-8 flex flex-col flex-grow">
@@ -41,18 +42,35 @@ const Chat = () => {
     const [input, setInput] = useState('')
     const [wait, setWait] = useState(false)
 
-    const handleSend = () => {
-        if (wait) return
-        setWait(true)
+    const handleSend = async () => {
+        if (wait) return; 
+        setWait(true);
 
-        messages.push({ sender: 'user', text: input })
-        setMessages(messages)
+        const newMessage = { sender: 'user', text: input };
+        setMessages((prevMessages) => [...prevMessages, newMessage]);
 
-        /* Send to RAG */
+        const apiUrl = 'http://localhost:5000/chat';
 
-        setInput('')
-        setWait(false)
-    }
+        try {
+             const response = await axios.post(apiUrl, {
+              user : "doctor" , 
+              content : input ,
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (response.data) {
+                const botReply = { sender: 'bot', text: response.data.data};
+                setMessages((prevMessages) => [...prevMessages, botReply]);
+            }
+        } catch (error) {
+            console.error('Error sending message:', error);
+        } finally {
+            setInput(''); 
+            setWait(false);
+        }
+    };
 
     return <main className="w-full h-full flex flex-col shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
         <Messages messages={messages}/>

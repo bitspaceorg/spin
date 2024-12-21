@@ -1,23 +1,19 @@
 'use client';
-import { useEffect, useState } from "react";
+
+import { useState } from "react";
 import Image from "next/image";
 import axios from "axios";
-import useAuthStore from "@/stores/AuthStore";
 import { useRouter } from "next/navigation";
 
-const Login = () => {
-    const [u, setU] = useState<{ name: string; pass: string }>({
+const Signup = () => {
+    const [userData, setUserData] = useState({
         name: "",
         pass: "",
+        role: "",
     });
-    const [next, setNext] = useState<boolean>(false);
-    const { user, setUser } = useAuthStore();
-    const [success, setSuccess] = useState(false)
-    const router = useRouter()
-
-    useEffect(() => {
-        if (user && user.role !== '') router.push('/')
-    }, [user])
+    const [nextStep, setNextStep] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -25,63 +21,55 @@ const Login = () => {
 
         const API_URL = "http://localhost:3000";
         try {
-            const { data } = await axios.post(`${API_URL}/auth/login`, {
-                email: u.name,
-                password: u.pass,
+            await axios.post(`${API_URL}/auth/signup`, {
+                name: "naan dha poole",
+                email: userData.name,
+                password: userData.pass,
+                role: userData.role,
             });
 
-            setSuccess(true)
-            setUser(data.data);
+            setSuccess(true);
+            router.push('/login')
         } catch (err) {
             console.error(err);
         }
     };
 
-    if (success) return (
-        <main className="w-full flex items-center justify-center h-full p-4">
-            <section className="min-w-80 w-[20%] shadow-xl border p-4">
-                <section>
-                    {(
-                        <form
-                            key="uname"
-                            onSubmit={(e) => {
-                                e.preventDefault();
-                                setNext(true);
-                            }}
-                        >
-                            <span className="w-full flex items-center">
-                                <Image
-                                    src="/assets/golden.png"
-                                    alt="logo"
-                                    width={30}
-                                    height={30}
-                                    className="m-2 mb-1"
-                                />
-                                <p className="text-[14px] text-slate-500">Spin</p>
-                            </span>
-                            <div className="flex">
-                                <span
-                                    key="u"
-                                    className="mb-4 text-[10px] pb-1 m-2 w-[95%] outline-none text-center"
-                                >Sign in successful</span>
-                            </div>
-                        </form>
-                    )}
+    if (success)
+        return (
+            <main className="w-full flex items-center justify-center h-full p-4">
+                <section className="min-w-80 w-[20%] shadow-xl border p-4">
+                    <section>
+                        <span className="w-full flex items-center">
+                            <Image
+                                src="/assets/golden.png"
+                                alt="logo"
+                                width={30}
+                                height={30}
+                                className="m-2 mb-1"
+                            />
+                            <p className="text-[14px] text-slate-500">Spin</p>
+                        </span>
+                        <div className="flex">
+                            <span
+                                className="mb-4 text-[10px] pb-1 m-2 w-[95%] outline-none text-center"
+                            >Sign up successful!</span>
+                        </div>
+                    </section>
                 </section>
-            </section>
-        </main>
-    )
+            </main>
+        );
 
     return (
         <main className="w-full flex items-center justify-center h-full p-4">
             <section className="min-w-80 w-[20%] shadow-xl border p-4">
                 <section>
-                    {!next ? (
+                    {!nextStep ? (
                         <form
                             key="uname"
                             onSubmit={(e) => {
                                 e.preventDefault();
-                                setNext(true);
+                                setNextStep(true);
                             }}
                         >
                             <span className="w-full flex items-center">
@@ -94,24 +82,24 @@ const Login = () => {
                                 />
                                 <p className="text-[14px] text-slate-500">Spin</p>
                             </span>
-                            <p className="m-2 font-bold">Sign in</p>
+                            <p className="m-2 font-bold">Sign up</p>
                             <input
                                 key="u"
                                 className="border-b-2 text-[10px] pb-1 m-2 mb-0 w-[95%] outline-none"
                                 placeholder="Email"
-                                value={u.name}
+                                value={userData.name}
                                 onChange={(e) =>
-                                    setU((prev) => ({
+                                    setUserData((prev) => ({
                                         ...prev,
                                         name: e.target.value,
                                     }))
                                 }
                             />
-                            <span onClick={() => router.push('/signup')} className="text-blue-500 text-[10px] ml-2 cursor-pointer">Sign up ?</span>
+                            <span className="text-blue-500 text-[10px] ml-2"><span className="text-black">Already a user </span><span onClick={() => router.push('/login')} className="cursor-pointer">Login ?</span></span>
                             <div className="flex justify-end m-2">
                                 <button
                                     type="submit"
-                                    onClick={() => setNext(true)}
+                                    onClick={() => setNextStep(true)}
                                     className="bg-[#005da6] text-[10px] text-white px-3 py-1"
                                 >
                                     Next
@@ -123,35 +111,54 @@ const Login = () => {
                             <p className="m-2 text-[10px] text-normal">
                                 <span
                                     onClick={() => {
-                                        setNext(false);
-                                        setU((prev) => ({ ...prev, pass: "" }));
+                                        setNextStep(false);
+                                        setUserData((prev) => ({ ...prev, pass: "" }));
                                     }}
                                     className="mr-1 cursor-pointer"
                                 >
                                     &larr;
                                 </span>{" "}
-                                {u.name}
+                                {userData.name}
                             </p>
-                            <p className="m-2 font-bold">Enter Password</p>
+                            <p className="m-2 font-bold">Create Password</p>
                             <input
                                 key="pass"
                                 className="border-[#005da6] border-b-[1px] text-[10px] pb-1 m-2 w-[95%] outline-none"
                                 placeholder="Password"
                                 type="password"
-                                value={u.pass}
+                                value={userData.pass}
                                 onChange={(e) =>
-                                    setU((prev) => ({
+                                    setUserData((prev) => ({
                                         ...prev,
                                         pass: e.target.value,
                                     }))
                                 }
                             />
+                            <p className="m-2 font-bold">Select Role</p>
+                            <select
+                                key="role"
+                                className="border-[#005da6] border-b-[1px] text-[10px] pb-1 m-2 w-[95%] outline-none"
+                                value={userData.role}
+                                onChange={(e) =>
+                                    setUserData((prev) => ({
+                                        ...prev,
+                                        role: e.target.value,
+                                    }))
+                                }
+                            >
+                                <option value="">Select Role</option>
+                                <option value="dean">Dean</option>
+                                <option value="dean">Doctor</option>
+                                <option value="dean">Nurse</option>
+                                <option value="dean">Administrator</option>
+                                <option value="finance_manager">Finance Manager</option>
+                            </select>
                             <div className="flex justify-end m-2">
                                 <button
                                     type="submit"
                                     className="bg-[#005da6] text-[10px] text-white px-3 py-1"
                                 >
-                                    Sign in
+                                    Sign up
                                 </button>
                             </div>
                         </form>
@@ -162,4 +169,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Signup;

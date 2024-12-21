@@ -2,9 +2,10 @@
 import Image from "next/image";
 import { useState } from 'react';
 import axios from 'axios';
+import useAuthStore from "@/stores/AuthStore";
 
 const Messages = ({ messages }: { messages: { sender: string, text: string }[] }) => {
-    return <div className="max-h-[88vh] overflow-y-auto py-8 flex flex-col flex-grow">
+    return <div className="min-h-[80vh] overflow-y-auto py-8 flex flex-col flex-grow mt-6">
         {messages.map((msg, i) => {
             return <div key={i} className={"flex" + (msg.sender !== 'bot' ? " justify-end" : "")}>
                 <div className={"m-8 mt-2 w-5/6 rounded-xl md:border bg-card text-card-foreground shadow-lg hover:shadow-xl p-4" + (msg.sender !== 'bot' ? " bg-[#e9ebf9]" : "")}>
@@ -18,29 +19,14 @@ const Messages = ({ messages }: { messages: { sender: string, text: string }[] }
 const Chat = () => {
     const [messages, setMessages] = useState([
         {
-            sender: 'user',
-            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam cursus justo sit amet odio pharetra rhoncus. Praesent in enim eget justo porttitor ornare et nec nisl. Suspendisse vel semper orci, sed euismod lorem. Integer pulvinar vehicula purus nec sollicitudin. Nam malesuada, elit et luctus ullamcorper, nulla tortor ultricies mauris, ac lobortis urna est ut ipsum. Sed ultricies ante eget orci convallis consequat. Phasellus faucibus mauris ut dolor pellentesque semper. Morbi erat ligula, rutrum at vehicula vitae, porta non purus. Suspendisse efficitur lectus eu pellentesque consequat. Quisque eleifend, massa tincidunt congue accumsan, nulla risus convallis justo, in vehicula odio elit in orci.'
-        },
-        {
             sender: 'bot',
-            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam cursus justo sit  '
-        },
-        {
-            sender: 'user',
-            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam cursus justo sit amet odio pharetra rhoncus. Praesent in enim eget justo porttitor ornare et nec nisl. Suspendisse vel semper orci, sed euismod lorem. Integer pulvinar vehicula purus nec sollicitudin. Nam malesuada, elit et luctus ullamcorper, nulla tortor ultricies mauris, ac lobortis urna est ut ipsum. Sed ultricies ante eget orci convallis consequat. Phasellus faucibus mauris ut dolor pellentesque semper. Morbi erat ligula, rutrum at vehicula vitae, porta non purus. Suspendisse efficitur lectus eu pellentesque consequat. Quisque eleifend, massa tincidunt congue accumsan, nulla risus convallis justo, in vehicula odio elit in orci.'
-        },
-        {
-            sender: 'bot',
-            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam cursus justo sit  '
-        },
-        {
-            sender: 'user',
-            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam cursus justo sit amet odio pharetra rhoncus. Praesent in enim eget justo porttitor ornare et nec nisl. Suspendisse vel semper orci, sed euismod lorem. Integer pulvinar vehicula purus nec sollicitudin. Nam malesuada, elit et luctus ullamcorper, nulla tortor ultricies mauris, ac lobortis urna est ut ipsum. Sed ultricies ante eget orci convallis consequat. Phasellus faucibus mauris ut dolor pellentesque semper. Morbi erat ligula, rutrum at vehicula vitae, porta non purus. Suspendisse efficitur lectus eu pellentesque consequat. Quisque eleifend, massa tincidunt congue accumsan, nulla risus convallis justo, in vehicula odio elit in orci.'
-        },
+            text: 'Hello ! What can I help with ? Feel free to ask anything .'
+        }
     ])
 
     const [input, setInput] = useState('')
     const [wait, setWait] = useState(false)
+    const { user } = useAuthStore()
 
     const handleSend = async () => {
         if (wait) return; 
@@ -51,9 +37,16 @@ const Chat = () => {
 
         const apiUrl = 'http://localhost:5000/chat';
 
+        const get = (u: any) => {
+            if (u == 'administrator') return 'admin'
+            if (u == 'finance_manager') return 'finance'
+            if (u == 'physician') return 'doctor'
+            return u
+        }
+
         try {
              const response = await axios.post(apiUrl, {
-              user : "doctor" , 
+              user : "dean", 
               content : input ,
             }, {
                 headers: {
@@ -87,7 +80,7 @@ const Chat = () => {
                     alt="send"
                     width={15}
                     height={15}
-                    className="absolute right-4 top-3 cursor-pointer"
+                    className="absolute right-4 top-3 cursor-pointer outline-none"
                     onClick={handleSend}
                 />
             </div>

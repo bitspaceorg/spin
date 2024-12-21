@@ -1,7 +1,9 @@
+import useAuthStore from "@/stores/AuthStore";
+import axios from "axios";
 import { useState } from "react";
 import {toast} from "react-toastify";
 
-interface DataType {
+interface PatientType {
     date: string;
     name: string;
     age: string;
@@ -13,6 +15,10 @@ interface DataType {
     oxygen_saturation: string;
     physician_information: string;
     description: string;
+};
+
+interface FinanceType {
+    date: string;
     patient_name: string;
     total_charges: string ;
     insurance_provider: string;
@@ -20,10 +26,10 @@ interface DataType {
     physician_charges: string;
     lab_tests_charges: string;
     medication_charges: string;
-};
+}
 
 const PatientUpload = () => {
-    const [d, setD] = useState<DataType>({
+    const [d, setD] = useState<PatientType>({
         date: '',
         name: '',
         age: '',
@@ -37,9 +43,9 @@ const PatientUpload = () => {
         description: ''
     });
 
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    // const [isLoading, setIsLoading] = useState<boolean>(false);
     
-    const handleChange = (k: keyof DataType, v: string) => {
+    const handleChange = (k: keyof PatientType, v: string) => {
         setD(prev => ({
             ...prev,
             [k]: v
@@ -48,22 +54,17 @@ const PatientUpload = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const apiUrl = 'http://localhost:3000/submit-form';
+        const apiUrl = 'http://localhost:3000/upload/file';
         try {
+            const formData = new FormData();
+            const jsonBlob = new Blob([JSON.stringify(d)], { type: 'application/json' });
             
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(d),
-            });
+            formData.append('file', jsonBlob, 'data.json');
+            formData.append('type', 'health');
 
-            if (!response.ok) {
-                const errorMessage = await response.text();
-                toast.error(`Failed to submit . Please try again later.`);
-                return;
-            }
+            axios.defaults.withCredentials = true;
+
+            const { data } = await axios.post(apiUrl, formData)
 
             toast.success('Form submitted successfully!');
             setD({
@@ -81,7 +82,7 @@ const PatientUpload = () => {
             });
         } catch (error) {
             console.error('Network error:', error);
-            toast.error('Unable to connect to the server. Please try again later.');
+            toast.error('Unable to upload.');
         }
     };
 
@@ -204,7 +205,7 @@ const PatientUpload = () => {
 };
 
 const FinanceUpload = () => {
-    const [d, setD] = useState<DataType>({
+    const [d, setD] = useState<FinanceType>({
       date: '',
       patient_name: '',
       total_charges: '',
@@ -215,7 +216,7 @@ const FinanceUpload = () => {
       medication_charges: '',
     })
 
-    const handleChange = (k: keyof DataType, v: string) => {
+    const handleChange = (k: keyof FinanceType, v: string) => {
         setD(prev => ({
             ...prev,
             [k]: v
@@ -224,22 +225,17 @@ const FinanceUpload = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const apiUrl = 'http://localhost:3000/submit-form';
+        const apiUrl = 'http://localhost:3000/upload/file';
         try {
+            const formData = new FormData();
+            const jsonBlob = new Blob([JSON.stringify(d)], { type: 'application/json' });
             
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(d),
-            });
+            formData.append('file', jsonBlob, 'data.json');
+            formData.append('type', 'bills');
 
-            if (!response.ok) {
-                const errorMessage = await response.text();
-                toast.error(`Failed to submit . Please try again later.`);
-                return;
-            }
+            axios.defaults.withCredentials = true;
+
+            const { data } = await axios.post(apiUrl, formData)
 
             toast.success('Form submitted successfully!');
             setD({
@@ -254,7 +250,7 @@ const FinanceUpload = () => {
             });
         } catch (error) {
             console.error('Network error:', error);
-            toast.error('Unable to connect to the server. Please try again later.');
+            toast.error('Unable to upload.');
         }
     };
 
@@ -344,8 +340,11 @@ const FinanceUpload = () => {
 };
 
 const Upload = () => {
-    //return <FinanceUpload />
-    return <PatientUpload />
+    const { user } = useAuthStore();
+
+    if (user &&user.role === 'finance_manager') return <FinanceUpload />
+    else if (user) return <PatientUpload />
+    else return null
 };
 
 export default Upload;

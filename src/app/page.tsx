@@ -1,8 +1,20 @@
 'use client'
 import { Upper, Sidebar, Chat, Upload, Dashboard } from "@/components"
 import { useComponent } from "@/stores"
+import useAuthStore from "@/stores/AuthStore";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Home() {
+    const router = useRouter();
+    const { user } = useAuthStore();
+
+    useEffect(() => {
+        if (!user || user.role === '') {
+            router.push('/login');
+        }
+    }, [user, router]);
+
     const { component } = useComponent();
 
     const items = [

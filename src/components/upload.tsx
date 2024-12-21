@@ -1,3 +1,4 @@
+import { BACKEND_URL } from "@/lib/utils";
 import useAuthStore from "@/stores/AuthStore";
 import axios from "axios";
 import { useState } from "react";
@@ -54,7 +55,6 @@ const PatientUpload = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const apiUrl = 'http://localhost:3000/upload/file';
         try {
             const formData = new FormData();
             const jsonBlob = new Blob([JSON.stringify(d)], { type: 'application/json' });
@@ -64,7 +64,7 @@ const PatientUpload = () => {
 
             axios.defaults.withCredentials = true;
 
-            const { data } = await axios.post(apiUrl, formData)
+            await axios.post(BACKEND_URL + '/upload/file', formData)
 
             toast.success('Form submitted successfully!');
             setD({
@@ -225,7 +225,6 @@ const FinanceUpload = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const apiUrl = 'http://localhost:3000/upload/file';
         try {
             const formData = new FormData();
             const jsonBlob = new Blob([JSON.stringify(d)], { type: 'application/json' });
@@ -235,7 +234,7 @@ const FinanceUpload = () => {
 
             axios.defaults.withCredentials = true;
 
-            const { data } = await axios.post(apiUrl, formData)
+            await axios.post(BACKEND_URL + '/upload/file', formData)
 
             toast.success('Form submitted successfully!');
             setD({

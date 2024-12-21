@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useState } from 'react';
 import axios from 'axios';
 import useAuthStore from "@/stores/AuthStore";
+import { FLASK_URL } from "@/lib/utils";
 
 const Messages = ({ messages }: { messages: { sender: string, text: string }[] }) => {
     return <div className="min-h-[80vh] overflow-y-auto py-8 flex flex-col flex-grow mt-6">
@@ -35,8 +36,6 @@ const Chat = () => {
         const newMessage = { sender: 'user', text: input };
         setMessages((prevMessages) => [...prevMessages, newMessage]);
 
-        const apiUrl = 'http://localhost:5000/chat';
-
         const get = (u: any) => {
             if (u == 'administrator') return 'admin'
             if (u == 'finance_manager') return 'finance'
@@ -45,8 +44,8 @@ const Chat = () => {
         }
 
         try {
-             const response = await axios.post(apiUrl, {
-              user : "dean", 
+             const response = await axios.post(FLASK_URL + '/chat', {
+              user : get(user ? user.role : ""),
               content : input ,
             }, {
                 headers: {

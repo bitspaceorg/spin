@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { BACKEND_URL } from "@/lib/utils";
 
 const Signup = () => {
     const [userData, setUserData] = useState({
@@ -19,9 +20,8 @@ const Signup = () => {
         e.preventDefault();
         axios.defaults.withCredentials = true;
 
-        const API_URL = "http://localhost:3000";
         try {
-            await axios.post(`${API_URL}/auth/signup`, {
+            await axios.post(`${BACKEND_URL}/auth/signup`, {
                 name: "naan dha poole",
                 email: userData.name,
                 password: userData.pass,

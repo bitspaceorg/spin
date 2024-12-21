@@ -8,7 +8,7 @@ interface AuthStore {
 const useAuthStore = create<AuthStore>((set) => {
     return {
         user: { role: '', id: 0 },
-        setUser: (to: any) => set((_) => ({ user: to }))
+        setUser: (to: { role: string, id: number }) => set({ user: to })
     }
 });
 

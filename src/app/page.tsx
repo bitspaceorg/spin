@@ -1,6 +1,5 @@
 'use client'
 import { Upper, Sidebar, Chat, Upload, Dashboard } from "@/components"
-import { BACKEND_URL, FLASK_URL } from "@/lib/utils";
 import { useComponent } from "@/stores"
 import useAuthStore from "@/stores/AuthStore";
 import { useRouter } from "next/navigation";

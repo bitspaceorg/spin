@@ -1,10 +1,6 @@
 import Image from "next/image";
 import { useComponent } from "@/stores"
 
-const Header = () => {
-    return <></>
-};
-
 const Body = () => {
     const { component, setComponent } = useComponent();
 

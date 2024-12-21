@@ -5,5 +5,5 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export const BACKEND_URL = process.env.BACKEND_URL || ""
-export const FLASK_URL = process.env.FLASK_URL || ""
+export const FLASK_URL = process.env.NEXT_PUBLIC_FLASK_URL || ""
+export const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || ""

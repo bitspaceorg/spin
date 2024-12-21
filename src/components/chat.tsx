@@ -36,7 +36,7 @@ const Chat = () => {
         const newMessage = { sender: 'user', text: input };
         setMessages((prevMessages) => [...prevMessages, newMessage]);
 
-        const get = (u: any) => {
+        const get = (u: string) => {
             if (u == 'administrator') return 'admin'
             if (u == 'finance_manager') return 'finance'
             if (u == 'physician') return 'doctor'
@@ -44,13 +44,14 @@ const Chat = () => {
         }
 
         try {
-             const response = await axios.post(FLASK_URL + '/chat', {
+            const response = await axios.post(FLASK_URL + '/chat', {
               user : get(user ? user.role : ""),
               content : input ,
             }, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                withCredentials: false
             });
             if (response.data) {
                 const botReply = { sender: 'bot', text: response.data.data};

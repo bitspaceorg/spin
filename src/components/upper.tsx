@@ -12,7 +12,7 @@ const Upper = () => {
 
     return <main className="flex items-center h-[7vh] w-full bg-[#f5f5f5] pl-4 font-mono text-black  justify-between fixed">
         <span className="ml-8"> Spin Pin In N </span>
-        { /* user && <button onClick={handle} className="font-bold px-2 py-1 mr-10 text-white bg-[#088675]">Login</button> */ }
+        { user && user.role !== '' && <button onClick={handle} className="font-bold px-2 py-1 mr-10 text-white bg-[#088675]">Login</button> }
     </main>
 };
 

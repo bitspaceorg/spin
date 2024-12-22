@@ -9,7 +9,7 @@ const Messages = ({ messages }: { messages: { sender: string, text: string }[] }
     return <div className="min-h-[80vh] overflow-y-auto py-8 flex flex-col flex-grow mt-6">
         {messages.map((msg, i) => {
             return <div key={i} className={"flex" + (msg.sender !== 'bot' ? " justify-end" : "")}>
-                <div className={"m-8 mt-2 w-5/6 rounded-xl md:border bg-card text-card-foreground shadow-lg hover:shadow-xl p-4" + (msg.sender !== 'bot' ? " bg-[#e9ebf9]" : "")}>
+                <div className={"leading-loose m-8 font-medium mt-2 max-w-[75%] rounded-xl md:border bg-card text-card-foreground shadow-md p-4" + (msg.sender !== 'bot' ? " bg-[#08867d] text-white font-medium" : " bg-[#17697f] text-white font-medium")}>
                     {msg.text}
                 </div>
             </div>
@@ -22,7 +22,7 @@ const Chat = () => {
         {
             sender: 'bot',
             text: 'Hello ! What can I help with ? Feel free to ask anything .'
-        }
+        },
     ])
 
     const [input, setInput] = useState('')
@@ -73,14 +73,14 @@ const Chat = () => {
                     placeholder="Type a question here"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    className="rounded-none shadow-md flex h-9 w-full border border-input bg-transparent px-3 py-1 text-base transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mb-2 border-black"
+                    className="rounded-lg shadow-xl flex h-14 w-full border-2 border-black border-input bg-transparent px-3 py-1 text-base transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mb-2"
                 />
                 <Image
                     src="/assets/send.svg"
                     alt="send"
-                    width={15}
-                    height={15}
-                    className="absolute right-4 top-3 cursor-pointer outline-none"
+                    width={20}
+                    height={20}
+                    className="absolute right-4 top-5 cursor-pointer outline-none"
                     onClick={handleSend}
                 />
             </div>

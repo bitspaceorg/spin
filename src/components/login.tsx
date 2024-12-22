@@ -54,11 +54,11 @@ const Login = () => {
                         >
                             <span className="w-full flex items-center">
                                 <Image
-                                    src="/assets/golden.png"
+                                    src="/assets/spin-new.png"
                                     alt="logo"
-                                    width={30}
-                                    height={30}
-                                    className="m-2 mb-1"
+                                    width={50}
+                                    height={50}
+                                    className=""
                                 />
                                 <p className="text-[1.4rem] text-slate-500">Spin</p>
                             </span>
@@ -80,7 +80,7 @@ const Login = () => {
                                 <button
                                     type="submit"
                                     onClick={() => setNext(true)}
-                                    className="bg-[#005da6] text-[1rem] text-white px-3 py-1"
+                                    className="bg-[#005da6] text-[1rem] text-white px-3 py-1 font-semibold"
                                 >
                                     Next
                                 </button>
@@ -100,7 +100,7 @@ const Login = () => {
                                 </span>{" "}
                                 {u.name}
                             </p>
-                            <p className="m-2 font-bold">Enter Password</p>
+                            <p className="m-2 font-bold text-[1.2rem]">Enter Password</p>
                             <input
                                 key="pass"
                                 className="border-[#005da6] border-b-[1px] text-[1rem] pb-1 m-2 w-[95%] outline-none"
@@ -117,7 +117,7 @@ const Login = () => {
                             <div className="flex justify-end m-2">
                                 <button
                                     type="submit"
-                                    className="bg-[#005da6] text-[1rem] text-white px-3 py-1"
+                                    className="bg-[#005da6] text-[1rem] text-white px-3 py-1 font-semibold"
                                 >
                                     Sign in
                                 </button>

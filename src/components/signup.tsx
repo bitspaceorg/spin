@@ -50,15 +50,15 @@ const Signup = () => {
                         >
                             <span className="w-full flex items-center">
                                 <Image
-                                    src="/assets/golden.png"
+                                    src="/assets/spin-new.png"
                                     alt="logo"
-                                    width={30}
-                                    height={30}
-                                    className="m-2 mb-1"
+                                    width={50}
+                                    height={50}
+                                    className=""
                                 />
                                 <p className="text-[1.4rem] text-slate-500">Spin</p>
                             </span>
-                            <p className="m-2 font-bold">Sign up</p>
+                            <p className="m-2 font-bold text-[1.2rem]">Sign up</p>
                             <input
                                 key="u"
                                 className="border-b-2 text-[1rem] pb-1 m-2 mb-3 w-[95%] outline-none"
@@ -76,7 +76,7 @@ const Signup = () => {
                                 <button
                                     type="submit"
                                     onClick={() => setNextStep(true)}
-                                    className="bg-[#005da6] text-[1rem] text-white px-3 py-1"
+                                    className="bg-[#005da6] text-[1rem] text-white px-3 py-1 font-semibold"
                                 >
                                     Next
                                 </button>
@@ -132,7 +132,7 @@ const Signup = () => {
                             <div className="flex justify-end m-2">
                                 <button
                                     type="submit"
-                                    className="bg-[#005da6] text-[1rem] text-white px-3 py-1"
+                                    className="bg-[#005da6] text-[1rem] text-white px-3 py-1 font-semibold"
                                 >
                                     Sign up
                                 </button>

@@ -7,7 +7,7 @@ import useAuthStore from "@/stores/AuthStore";
 import { FLASK_URL } from "@/lib/utils";
 
 const Messages = ({ messages }: { messages: { sender: string, text: string }[] }) => {
-    return <div  className="min-h-[80vh] overflow-y-auto py-8 flex flex-col flex-grow mt-6 overflow-x-hidden">
+    return <div  className="min-h-[80vh] overflow-y-auto py-4 flex flex-col flex-grow mt-0 overflow-x-hidden">
         {messages.map((msg, i) => {
             return <motion.div style={{ position: 'relative' }} initial={{ x: (msg.sender !== "bot" ? "100%" : "-100%") }} animate={{ x: 0 }} transition={{ type: "tween", delay: 1 * 0.2, duration: 0.3, ease: 'linear' }}  key={i} className={"flex relative" + (msg.sender !== 'bot' ? " justify-end" : "")}>
                 <div className={"leading-loose m-8 font-medium mt-2 max-w-[75%] rounded-xl md:border text-card-foreground shadow-md p-4" + (msg.sender !== 'bot' ? " bg-[#08867d] text-white font-medium" : " bg-[#17697f] text-white font-medium")}>
@@ -67,7 +67,7 @@ const Chat = () => {
         }
     };
 
-    return <main className="w-full h-full flex flex-col shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
+    return <main className="w-full h-full flex flex-col">
         <form onSubmit={handleSend}>
             <Messages messages={messages}/>
             <div className="w-full flex flex-col items-center h-[5vh] justify-center">

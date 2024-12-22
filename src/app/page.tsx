@@ -42,7 +42,7 @@ export default function Home() {
                 <Upper />
                 {items.map((ele, i) => {
                     if (ele.text === component) {
-                        return <div key={i} className="h-full w-full">
+                        return <div key={i} className="h-full w-full mt-6">
                             { ele.component }
                         </div>
                     }

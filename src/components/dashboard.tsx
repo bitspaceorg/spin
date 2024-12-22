@@ -9,8 +9,8 @@ const Dashboard = () => {
             <iframe title="testreport" className="w-full md:w-[75%] h-full md:h-[90%] p-10" width="600" height="373.5" src="https://app.fabric.microsoft.com/view?r=eyJrIjoiZWNiOTYxMDItOWEwOC00MTNkLThiYzQtNzhjNTI1MThjNDE2IiwidCI6ImI4NjMzNGVkLWM2M2ItNGExZC04NjY5LWVhMDI4NzBkMmJiNSJ9"></iframe>
         }
         <div className="mb-10">
-            <button onClick={() => setIs(false)} className={"p-2 bg-slate-50 text-black " + (!is ? "bg-slate-300" : "")}>Finance</button>
-            <button onClick={() => setIs(true)} className={"p-2 bg-slate-50 text-black " + (is ? "bg-slate-300" : "")}>Patient</button>
+            <button onClick={() => setIs(false)} className={"p-3 font-semibold " + (!is ? "bg-[#088675] text-white" : "bg-slate-50 text-black")}>FINANCE</button>
+            <button onClick={() => setIs(true)} className={"p-3 font-semibold " + (is ? "bg-[#088675] text-white" : "bg-slate-50 text-black")}>PATIENT</button>
         </div>
     </main>
 };

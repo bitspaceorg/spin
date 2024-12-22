@@ -7,7 +7,7 @@ interface ComponentType {
 
 const useComponent = create<ComponentType>((set) => {
     return {
-        component: 'Dashboard',
+        component: 'Bot',
         setComponent: (to: string) => set({ component: to })
     }
 });

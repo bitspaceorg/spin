@@ -9,7 +9,7 @@ const Messages = ({ messages }: { messages: { sender: string, text: string }[] }
     return <div className="min-h-[80vh] overflow-y-auto py-8 flex flex-col flex-grow mt-6">
         {messages.map((msg, i) => {
             return <div key={i} className={"flex" + (msg.sender !== 'bot' ? " justify-end" : "")}>
-                <div className={"leading-loose m-8 font-medium mt-2 max-w-[75%] rounded-xl md:border bg-card text-card-foreground shadow-md p-4" + (msg.sender !== 'bot' ? " bg-[#08867d] text-white font-medium" : " bg-[#17697f] text-white font-medium")}>
+                <div className={"leading-loose m-8 font-medium mt-2 max-w-[75%] rounded-xl md:border text-card-foreground shadow-md p-4" + (msg.sender !== 'bot' ? " bg-[#08867d] text-white font-medium" : " bg-[#17697f] text-white font-medium")}>
                     {msg.text}
                 </div>
             </div>

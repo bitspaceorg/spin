@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 const Upper = () => {
     const router = useRouter();
-    const { user, setUser } = useAuthStore();
+    const { setUser } = useAuthStore();
 
     const handle = async () => {
         try {

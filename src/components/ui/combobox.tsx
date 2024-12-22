@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { Check, ChevronsUpDown } from "lucide-react"
+import { UseFormSetValue, FieldValues, Path } from "react-hook-form";
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -34,12 +35,16 @@ const roles = [
   },
 ]
 
-export function Combobox({setValueForm}:any) {
+interface ComboboxProps<T extends FieldValues> {
+  setValueForm: UseFormSetValue<T>;
+}
+
+export function Combobox<T extends FieldValues>({setValueForm}: ComboboxProps<T>) {
   const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("")
+  const [value, setValue] = React.useState<"Male" | "Female" | "Prefer Not To Say">("Prefer Not To Say")
 
 	React.useEffect(()=>{
-		setValueForm('gender',value);
+		setValueForm('gender' as Path<T>, value as T[Path<T>]);
 	},[value])
 
   return (
@@ -68,8 +73,10 @@ export function Combobox({setValueForm}:any) {
                   key={role.value}
                   value={role.value}
                   onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue)
-                    setOpen(false)
+                    if (currentValue !== value && (currentValue == "Male" || currentValue === "Female" || currentValue === "Prefer Not To Say")) {
+                      setValue(currentValue)
+                      setOpen(false)
+                    }
                   }}
                 >
                   <Check

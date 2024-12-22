@@ -1,7 +1,6 @@
-import { BACKEND_URL } from "@/lib/utils";
 import useAuthStore from "@/stores/AuthStore";
 import PatientUpload from "./patient_upload";
-import FinanceUpload from "./finance_uplaod";
+import FinanceUpload from "./finance_upload";
 
 const Upload = () => {
   const { user } = useAuthStore();

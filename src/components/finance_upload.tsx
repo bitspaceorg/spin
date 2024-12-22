@@ -83,7 +83,7 @@ export default function FinanceUpload() {
             <FormField
               control={form.control}
               name="date"
-              render={({ field }) => (
+              render={() => (
                 <FormItem>
                   <FormLabel>Date</FormLabel>
                   <FormControl>

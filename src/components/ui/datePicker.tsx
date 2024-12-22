@@ -3,6 +3,7 @@
 import * as React from "react";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
+import { FieldValues, UseFormSetValue, Path } from "react-hook-form";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -13,13 +14,17 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-export function DatePicker({ setValue }: any) {
+interface DatePickerProps<T extends FieldValues> {
+  setValue: UseFormSetValue<T>;
+}
+
+export function DatePicker<T extends FieldValues>({ setValue }: DatePickerProps<T>) {
   const [date, setDate] = React.useState<Date>();
 
   React.useEffect(() => {
     setValue(
-      "date",
-      `${date?.getFullYear()}-${date?.getMonth().toString().padStart(2, "0")}-${date?.getDate().toString().padStart(2, "0")}`,
+      "date" as Path<T>,
+      `${date?.getFullYear()}-${date?.getMonth().toString().padStart(2, "0")}-${date?.getDate().toString().padStart(2, "0")}` as T[Path<T>],
     );
   }, [date]);
 

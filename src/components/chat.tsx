@@ -1,7 +1,7 @@
 'use client'
 import Image from "next/image";
 import { useState } from 'react';
-import { animate, motion } from 'motion/react'
+import { motion } from 'motion/react'
 import axios from 'axios';
 import useAuthStore from "@/stores/AuthStore";
 import { FLASK_URL } from "@/lib/utils";

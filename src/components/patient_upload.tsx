@@ -94,7 +94,7 @@ export default function PatientUpload() {
               <FormField
                 control={form.control}
                 name="date"
-                render={({ field }) => (
+                render={() => (
                   <FormItem>
                     <div className="flex space-x-10 items-center">
                       <FormLabel>Date</FormLabel>
@@ -111,7 +111,7 @@ export default function PatientUpload() {
               <FormField
                 control={form.control}
                 name="gender"
-                render={({ field }) => (
+                render={() => (
                   <FormItem>
                     <div className="flex space-x-10 items-center">
                       <FormLabel>Gender</FormLabel>
